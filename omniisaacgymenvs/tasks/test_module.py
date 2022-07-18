@@ -87,7 +87,7 @@ class Module(Robot):
         self._name = name
 
         if self._usd_path is None:
-            self._usd_path = "./usds/urdf_closed.usd"
+            self._usd_path = "./usds/omni_closed_test/omni_closed_test.usd"
 
         add_reference_to_stage(self._usd_path, prim_path)
 
@@ -122,7 +122,7 @@ class TestModule(RLTask):
 
         self._num_dof = 3
         self._num_actions = self._num_dof
-        self._dof_positions = torch.tensor([0, 0.7, -0.7], dtype=torch.float32)
+        self._dof_positions = torch.tensor([1.57, 0.7, -0.7], dtype=torch.float32)
 
         self._dof_names = ["a__dof1", "a__dof2", "a__dof3"]
         self._dof_indices = []
@@ -130,7 +130,7 @@ class TestModule(RLTask):
 
         self._robot = Module
         self._robot_name = "TestModule"
-        self._articulation_prim = "/module"
+        self._articulation_prim = ""
 
         RLTask.__init__(self, name, env)
 
@@ -205,12 +205,11 @@ class TestModule(RLTask):
     def reset_idx(self, env_ids):
         num_resets = len(env_ids)
 
-        reset_joint_velocities = torch.zeros(num_resets, self._num_actions)
+        reset_joint_velocities = torch.zeros(num_resets, 5)
         # Reset joint positions/velocities to default
         if self._dof_names: 
-            #self._robot_arti.set_joint_position_targets(self._dof_positions, indices=env_ids, joint_indices=self._dof_indices)
             self._robot_arti.set_joint_positions(self._dof_positions, indices=env_ids, joint_indices=self._dof_indices)
-            self._robot_arti.set_joint_velocities(reset_joint_velocities, indices=env_ids, joint_indices=self._dof_indices)
+            self._robot_arti.set_joint_velocities(reset_joint_velocities, indices=env_ids)
         else:
             self._robot_arti.set_joint_positions(self._dof_positions, indices=env_ids)
             self._robot_arti.set_joint_velocities(reset_joint_velocities, indices=env_ids)

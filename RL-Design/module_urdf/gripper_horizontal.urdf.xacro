@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="link_type" value="overconstrained"/>
+
+    <xacro:include filename="${link_type}.urdf.xacro"/>
+
+
+    <link name="horizontal_base">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="${root_folder}/mesh/frames/gripper_horizontal.obj" scale="${scale}"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="${root_folder}/mesh/frames/gripper_horizontal.obj" scale="${scale}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--Four modules-->
+    <xacro:module module_prefix="0" parent_link="horizontal_base">
+        <origin xyz="-0.08 -0.1329 -0.041" rpy="${PI/-2} ${PI/-2} 0"/>
+    </xacro:module>
+
+    <xacro:module module_prefix="1" parent_link="horizontal_base">
+        <origin xyz="0.1329 -0.08 -0.041" rpy="0 ${PI/-2} 0"/>
+    </xacro:module>
+
+    <xacro:module module_prefix="2" parent_link="horizontal_base">
+        <origin xyz="0.08 0.1329 -0.041" rpy="${PI/2} 0 ${PI/2}"/>
+    </xacro:module>
+
+    <xacro:module module_prefix="3" parent_link="horizontal_base">
+        <origin xyz="-0.1329 0.08 -0.041" rpy="${PI} ${PI/-2} 0"/>
+    </xacro:module>        
+
+</robot>

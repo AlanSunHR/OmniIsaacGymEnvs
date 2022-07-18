@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="root_folder" value="."/>
+    <xacro:property name="scale" value="0.001 0.001 0.001"/>
+    <xacro:property name="PI" value="3.14159265"/>
+    <xacro:property name="link_type" value="spherical"/>
+
+    <!--Inertial Information for each part-->
+    <xacro:macro name="xm430_inertia">
+        <inertial>
+            <origin xyz="-4.0773796e-3 -1.5304911e-2 -1.6871895e-2" rpy="0 0 0"/>
+            <mass value="0.082"/>
+            <inertia ixx="2.3729564e-5" ixy="-1.3079758e-7" 
+                    ixz="-8.1403365e-8" iyy="1.3112295e-5" 
+                    iyz="-1.9659314e-6" izz="2.0942871e-5"/>
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="base_motor_frame_inertia">
+        <inertial>
+            <origin xyz="6.48e-08 -0.0015864406 0.0250889877" rpy="0 0 0"/>
+            <mass value="0.0768049156"/>
+            <inertia ixx="5.65659e-05" iyy="5.30145e-05"
+                izz="3.40217e-05" ixy="-0.0"
+                iyz="1.1663e-06" ixz="1e-10"/>
+        </inertial>    
+    </xacro:macro>
+
+    <xacro:macro name="dual_servo_shell_inertia">
+        <inertial>
+            <origin xyz="0.0005322566 -0.0003161331 0.0506920676" rpy="0 0 0"/>
+            <mass value="0.0258069457"/>
+            <inertia ixx="4.11451e-05" iyy="4.42386e-05"
+                izz="4.8477e-06" ixy="7.82e-08"
+                iyz="2.774e-07" ixz="-7.721e-07"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="dual_servo_transmission_inertia">
+        <inertial>
+            <origin xyz="-1.41e-08 0.0095354556 0.0141401617" rpy="0 0 0"/>
+            <mass value="0.0576887165"/>
+            <inertia ixx="2.78223e-05" iyy="1.35978e-05"
+                izz="2.50167e-05" ixy="5.7e-09"
+                iyz="4.5419e-06" ixz="-0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="finger2_inertia">
+        <inertial>
+            <origin xyz="1.921e-07 -0.0536710647 -0.0027286753" rpy="0 0 0"/>
+            <mass value="0.0223634982"/>
+            <inertia ixx="3.69673e-05" iyy="2.2843e-06"
+                izz="3.55734e-05" ixy="1.3e-09"
+                iyz="-7.3003e-06" ixz="3e-10"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="finger1_inertia">
+        <inertial>
+            <origin xyz="9.28e-08 -0.0646454414 -0.0149877262" rpy="0 0 0"/>
+            <mass value="0.028012246"/>
+            <inertia ixx="3.69825e-05" iyy="3.2856e-06"
+                izz="3.49111e-05" ixy="-2e-10"
+                iyz="-7.8417e-06" ixz="-0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <!--Parts-->
+    <xacro:macro name="xm430" params="module_prefix motor_index">
+        <link name="${module_prefix}-xm430_${motor_index}">
+            <xacro:xm430_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/XM430-simplified.stl" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/XM430-simplified.stl" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+    
+    <xacro:macro name="base_motor_frame" params="module_prefix">
+        <link name="${module_prefix}-base_motor_frame">
+            <xacro:base_motor_frame_inertia/>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/base_motor_frame_simplified.stl" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/base_motor_frame_simplified.stl" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="dual_servo_shell" params="module_prefix">
+        <link name="${module_prefix}-dual_servo_shell">
+            <xacro:dual_servo_shell_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/dual_servo_shell_simplified.stl" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/dual_servo_shell_simplified.stl" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+    
+    <xacro:macro name="dual_servo_transmission" params="module_prefix">
+        <link name="${module_prefix}-dual_servo_transmission">
+            <xacro:dual_servo_transmission_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/dual_servo_transmission_simplified.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/general/dual_servo_transmission_simplified.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link> 
+    </xacro:macro>
+
+    <xacro:macro name="finger2" params="module_prefix">
+        <link name="${module_prefix}-finger2">
+            <xacro:finger2_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/${link_type}/finger2.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/${link_type}/finger2.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="finger1" params="module_prefix">
+        <link name="${module_prefix}-finger1">
+            <xacro:finger1_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/${link_type}/finger1.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/${link_type}/finger1.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link> 
+    </xacro:macro>
+
+
+    <!--Module Definition-->
+    <xacro:macro name="module_overconstrained" params="module_prefix parent_link *origin">
+        <!--Create all the parts needed to construct the module-->
+        <xacro:xm430 module_prefix="${module_prefix}" motor_index="0"/>
+        <xacro:xm430 module_prefix="${module_prefix}" motor_index="1"/>
+        <xacro:xm430 module_prefix="${module_prefix}" motor_index="2"/>
+        <xacro:base_motor_frame module_prefix="${module_prefix}"/>
+        <xacro:dual_servo_shell module_prefix="${module_prefix}"/>
+        <xacro:dual_servo_transmission module_prefix="${module_prefix}"/>
+        <xacro:finger1 module_prefix="${module_prefix}"/>
+        <xacro:finger2 module_prefix="${module_prefix}"/>
+        
+
+        <!--Create joints to connect the parts-->
+        <!--Fix the module to module parent link-->
+        <joint name="${module_prefix}-module_to_parent" type="fixed">
+            <parent link="${parent_link}"/>
+            <child link="${module_prefix}-base_motor_frame"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+        <!--Fix the parts which are not supposed to move-->
+        <joint name="${module_prefix}-fix_xm430_0" type="fixed">
+            <parent link="${module_prefix}-base_motor_frame"/>
+            <child link="${module_prefix}-xm430_0"/>
+            <origin xyz="0 0 0.054" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-fix_xm430_1" type="fixed">
+            <parent link="${module_prefix}-dual_servo_shell"/>
+            <child link="${module_prefix}-xm430_1"/>
+            <origin xyz="0 0.019 0.0334" rpy="${-1*PI/2.0} 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-fix_xm430_2" type="fixed">
+            <parent link="${module_prefix}-xm430_1"/>
+            <child link="${module_prefix}-xm430_2"/>
+            <origin xyz="0 -0.0465 0" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-fix_transmission" type="fixed">
+            <parent link="${module_prefix}-xm430_2"/>
+            <child link="${module_prefix}-dual_servo_transmission"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+        <!--DoFs, joints corresponding to the degrees of actuation-->
+        <joint name="${module_prefix}-dof1" type="revolute">
+            <parent link="${module_prefix}-xm430_0"/>
+            <child link="${module_prefix}-dual_servo_shell"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof2" type="revolute">
+            <parent link="${module_prefix}-xm430_2"/>
+            <child link="${module_prefix}-finger1"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI/2}" upper="${PI/2}" velocity="1000"/>
+            <origin xyz="0 0 0.0388" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof3" type="revolute">
+            <parent link="${module_prefix}-finger1"/>
+            <child link="${module_prefix}-finger2"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1000"/>
+            <origin xyz="0.0 -0.097893 -0.017213" rpy="0.3876 0 0"/>    
+        </joint>
+
+        <!--frames that may be helpful-->
+        <link name="${module_prefix}-fingertip_frame">
+            <geometry>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </geometry>
+        </link>
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-finger2"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <origin xyz="0 -0.12478 -0.024789" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>

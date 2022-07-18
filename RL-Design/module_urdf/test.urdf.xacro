@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="overconstrained_module_omni.urdf.xacro"/>
+
+    <link name="base"/>
+
+    <xacro:module module_prefix="0" parent_link="base">
+        <origin xyz="0 0 0.2" rpy="0 ${PI} 0"/>
+    </xacro:module>
+
+</robot>
