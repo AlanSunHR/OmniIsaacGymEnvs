@@ -28,19 +28,11 @@
 
 
 def initialize_task(config, env, init_sim=True):
-    from omniisaacgymenvs.tasks.allegro_hand import AllegroHandTask
-    from omniisaacgymenvs.tasks.ant import AntLocomotionTask
-    from omniisaacgymenvs.tasks.cartpole import CartpoleTask
-    from omniisaacgymenvs.tasks.humanoid import HumanoidLocomotionTask
-    from omniisaacgymenvs.tasks.shadow_hand import ShadowHandTask
+    from omniisaacgymenvs.tasks.test_module import TestModule
 
     # Mappings from strings to environments
     task_map = {
-        "AllegroHand": AllegroHandTask,
-        "Ant": AntLocomotionTask,
-        "Cartpole": CartpoleTask,
-        "Humanoid": HumanoidLocomotionTask,
-        "ShadowHand": ShadowHandTask,
+        "TestModule": TestModule,
     }
 
     from .config_utils.sim_config import SimConfig
