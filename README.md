@@ -36,6 +36,6 @@ PYTHON_PATH scripts/random_policy.py task=TestModule num_envs=1
 
 ### Process of the task
 
-The task is used to test if the closed chain robot will be simulated normally in Omniverse Isaac Gym. The total episode length is 1000. At the first episode, the robot will be reset to its initial pose with 0 velocity for every DoF. For every 200 timesteps, a random DoF position target (directly from the actor network output, inside the range of [-1, 1]) will be set, and ideally the robot will move the joints to the target.
+The task is used to test if the closed chain robot will be simulated normally in Omniverse Isaac Gym. The total episode length is 1000. At the first episode, the robot will be reset to its initial pose with 0 velocity for every DoF. For the first 100 timsteps, no joint position targets are set, so ideally the robot should stay still for a while. For the rest of the timesteps, a random DoF position target (directly from the actor network output, inside the range of [-1, 1]) will be set, and ideally the robot will move the joints to the target.
 
 
